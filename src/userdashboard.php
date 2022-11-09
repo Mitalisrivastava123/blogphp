@@ -50,7 +50,7 @@ if ($result->num_rows > 0) {
     }
 }
 $idsession= $_SESSION["id"];
-// echo $_SESSION["name"];
+$namesession= $_SESSION["name"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -123,7 +123,7 @@ if(isset($_POST["new_post"]))
 {
 $title = $_POST["title"];
 $content=$_POST["content"];
-$sql1 = "INSERT INTO blogtable(title,content,userid) values ('$title','$content','$idsession')";
+$sql1 = "INSERT INTO blogtable(title,content,userid,uname) values ('$title','$content','$idsession','$namesession')";
 $result1 = mysqli_query($conn, $sql1);
 if (mysqli_query($conn, $sql)) {  
 }
@@ -142,7 +142,7 @@ if (mysqli_query($conn, $sqltwo)) {
 }
 ?>
 <?php 
-$sql2 = "SELECT id,title,content,userid  FROM blogtable";
+$sql2 = "SELECT id,title,content,userid,uname  FROM blogtable";
 // $sql3= "SELECT name  FROM registertable WHERE id='$id'";
 
 $result2 = mysqli_query($conn, $sql2); ?>
@@ -155,7 +155,7 @@ echo $nameuser;
     echo "<table border='1px'>";
     echo "<th>Blog Posted By</th><th>Id</th><th>Title</th><th>Content</th>";
    while($row = $result2->fetch_assoc()) {
-    echo "<tr><td>" .$row["userid"]."</td><td>". $row["id"]. "  </td><td>". $row["title"].  "</td><td>" . $row["content"] . "</td><td><a class='btn btn-info' href='userdashboard.php?id=".$row["id"]."'>edit</a></td><td><a href='delete.php?id=".$row['id']."' >Delete</a></td>";
+    echo "<tr><td>" .$row["uname"]."</td><td>". $row["id"]. "  </td><td>". $row["title"].  "</td><td>" . $row["content"] . "</td><td><a class='btn btn-info' href='userdashboard.php?id=".$row["id"]."'>edit</a></td><td><a href='delete.php?id=".$row['id']."' >Delete</a></td>";
     }
 
 }

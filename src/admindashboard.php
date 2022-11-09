@@ -93,7 +93,7 @@ if (mysqli_query($conn, $sql)) {
 }
 ?>
 <?php 
-$sql2 = "SELECT id,title,content  FROM blogtable";
+$sql2 = "SELECT id,title,content,userid,uname  FROM blogtable";
 $result2 = mysqli_query($conn, $sql2); ?>
 <?php 
 if ($result2->num_rows > 0) {
@@ -101,7 +101,7 @@ if ($result2->num_rows > 0) {
     echo "<table border='1px'>";
     echo "<th>Id</th><th>Title</th><th>Content</th>";
    while($row = $result2->fetch_assoc()) {
-    echo "<tr><td>". $row["id"]. "  </td><td>". $row["title"].  "</td><td>" . $row["content"] . "</td><td><a class='btn btn-info' href='userdashboard.php?id=".$row["id"]."'>edit</a></td><td><a href='deleteadminblog.php?id=".$row['id']."' >Delete</a></td>";
+    echo "<tr><td>".$row["uname"]. "  </td><td>". $row["title"].  "</td><td>" . $row["content"] . "</td><td><a class='btn btn-info' href='userdashboard.php?id=".$row["id"]."'>edit</a></td><td><a href='deleteadminblog.php?id=".$row['id']."' >Delete</a></td>";
     }
 }
 ?>
