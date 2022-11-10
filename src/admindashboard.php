@@ -101,9 +101,9 @@ if ($result2->num_rows > 0) {
     <div class="card-columns-fluid">
   <div class="card" style="width: 30rem;background-color:#17a2b8;color:#fff;margin:auto;">
   <div class="card-body">
-    <h4 class="card-text">Block Posted By-><?php echo $row["uname"];?></h4>
-    <h5 class="card-title"><?php echo $row["title"];?></h5>
-    <p class="card-text"><?php echo $row["content"];?></p>
+    <h4 class="card-text"><span class="blog-title">Blog Posted By- </span> <?php echo $row["uname"];?></h4>
+    <h5 class="card-title"><span class="blog-title">Blog title- </span><?php echo $row["title"];?></h5>
+    <p class="card-text"><span class="blog-title">Blog Content- </span><?php echo $row["content"];?></p>
   <?php  echo "<a href='deleteadminblog.php?id=".$row['id']."' ><span style='background:#198754;text-decoration:none;color:#fff;padding:10px;'>Delete</span></a>" ?>
   </div>
   </div>

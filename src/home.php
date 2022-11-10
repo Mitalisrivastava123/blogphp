@@ -36,32 +36,30 @@ include 'connection.php';
 </nav>
 <!-- navbar end -->
 <p>
-    <h3 class="text-center" style="color:#17a2b8;">Blogs BY User or Admin</h3>
+    <h3 class="text-center" style="color:#17a2b8;">Blogs BY User</h3>
 
     <!-- fetching data from blog table -->
 <?php 
 $sql2 = "SELECT id,title,content,userid,uname  FROM blogtable";
 $result2 = mysqli_query($conn, $sql2); ?>
 <?php 
-if ($result2->num_rows > 0) {
-   while($row = $result2->fetch_assoc()) { ?>
-   <div class="row">
-    <div class="col-md-4"></div>
- <div class="col-md-4">
-    <div class="card-columns-fluid">
-<div class="card" style="width: 30rem;background-color:#17a2b8;color:#fff;margin:auto;">
-  <div class="card-body">
-    <h4 class="card-text">Block Posted By-><?php echo $row["uname"];?></h4>
-    <h5 class="card-title"><?php echo $row["title"];?></h5>
-    <p class="card-text"><?php echo $row["content"];?></p>
-  </div>
-  </div>
-</div>
-   </div>
-   </div>
-   <?php echo "<br>"; ?>
-   <?php  } ?>
-<?php } ?>
+if ($result2->num_rows > 0) { 
+  echo '<div class="row">';
+   while($row = $result2->fetch_assoc()) { 
+
+echo "<div class='card col-4' style='background-color:#17a2b8;color:#fff;margin:10px;'>";
+  echo "<div class='card-body'>";
+    echo "<h4 class='card-text'><span class='blog-title'>Block Posted By-></span>" .$row["uname"]. "</h4>";
+    echo "<h5 class='card-title'><span class='blog-title'>Blog title-</span>". $row["title"]."</h5>";
+   echo "<p class='card-text'><span class='blog-title'>Blog content-</span>" .$row["content"]."</p>";
+  echo '</div>';
+ echo '</div>';
+
+   } 
+   echo '</div>';
+ 
+  }
+  ?>
 
 
 
