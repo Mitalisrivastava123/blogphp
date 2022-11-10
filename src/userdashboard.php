@@ -66,7 +66,7 @@ $namesession= $_SESSION["name"];
 
 <nav class="navbar navbar-expand-lg navbar-light nav1">
 
-  <a class="navbar-brand" href="#">Home</a>
+  <a class="navbar-brand" href="home.php">Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -94,6 +94,7 @@ $namesession= $_SESSION["name"];
 ?> 
 <div class="container">
 <h4 class="text-center">Create Your Blog Here</h4>
+<h3 class="text-center" style="color:#17a2b8">User Dashboard</h3>
 <form method="POST">
   <div class="form-group">
     <label for="exampleInputEmail1">Title</label>
@@ -108,6 +109,14 @@ $namesession= $_SESSION["name"];
   <button type="submit" name="update" class="btn btn-info">update</button>
 </form>
 </div>
+<?php
+echo "<form action = '' method='post'>
+<button type='submit' name='logout' style='background-color:#17a2b8;padding:10px;color:#fff;margin-top:10px;margin:auto;'>logout User</button></form>";
+if(isset($_POST["logout"]))
+{
+  session_destroy();
+}
+?>
  <br>
 <?php
 $sqlqu = "SELECT id,name  FROM registertable WHERE email = '$email' and password='$password'";
@@ -142,28 +151,41 @@ if (mysqli_query($conn, $sqltwo)) {
 }
 ?>
 <?php 
-$sql2 = "SELECT id,title,content,userid,uname  FROM blogtable";
-// $sql3= "SELECT name  FROM registertable WHERE id='$id'";
-
+$sql2 = "SELECT id,title,content,userid,uname  FROM blogtable WHERE userid='$idsession'";
 $result2 = mysqli_query($conn, $sql2); ?>
 <?php 
-
-
 if ($result2->num_rows > 0) {
-  $nameuser =$row["userid"];
-echo $nameuser;
-    echo "<table border='1px'>";
-    echo "<th>Blog Posted By</th><th>Id</th><th>Title</th><th>Content</th>";
-   while($row = $result2->fetch_assoc()) {
-    echo "<tr><td>" .$row["uname"]."</td><td>". $row["id"]. "  </td><td>". $row["title"].  "</td><td>" . $row["content"] . "</td><td><a class='btn btn-info' href='userdashboard.php?id=".$row["id"]."'>edit</a></td><td><a href='delete.php?id=".$row['id']."' >Delete</a></td>";
-    }
+    $nameuser =$row["userid"];
+    echo $nameuser;
+    echo "<table border='1px' style='margin:auto;width:80%;background:#f3fdff;'>";
+   while($row = $result2->fetch_assoc()) {?>
+    <div class="row">
+    <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <div class="card-columns-fluid">
+  <div class="card" style="width: 30rem;background-color:#17a2b8;color:#fff;margin:auto;">
+  <div class="card-body">
+    <h4 class="card-text">Block Posted By-><?php echo $row["uname"];?></h4>
+    <h5 class="card-title"><?php echo $row["title"];?></h5>
+    <p class="card-text"><?php echo $row["content"];?></p>
+  <?php  echo "<a href='userdashboard.php?id=".$row["id"]."'><span style='background:#198754;text-decoration:none;color:#fff;padding:10px;'>Edit</span></a>" ?>
+  <?php  echo "<a href='delete.php?id=".$row['id']."' ><span style='background:#198754;text-decoration:none;color:#fff;padding:10px;'>delete</span></a>" ?>
+  
+  </div>
+  </div>
+  </div>
+   </div>
+   </div>
+  
+  <?php  } ?>
+  <?php } ?>
+    <!-- echo "<tr><td>" .$row["uname"]."</td><td>". $row["id"]. "  </td><td>". $row["title"].  "</td><td>" . $row["content"] . "</td><td><a class='btn btn-info' href='userdashboard.php?id=".$row["id"]."'>edit</a></td><td><a href='delete.php?id=".$row['id']."' >Delete</a></td>"; -->
 
-}
 
 
 
 
-?>
+
 
 </body>
 </html>

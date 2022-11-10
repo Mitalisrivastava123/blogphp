@@ -69,6 +69,7 @@
                                         <option selected>Usertype</option>
                                         <option value="admin">Admin</option>
                                         <option value="user">User</option>
+                                       
                                     </select>
 
                        <br>
