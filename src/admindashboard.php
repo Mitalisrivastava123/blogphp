@@ -36,7 +36,6 @@ session_start();
 <br>
 
 <div class="container">
-<h4 class="text-center">Create Your Blog Here</h4>
 <h3 class="admin text-center" style="color:#17a2b8">Admin Dashboard</h3> 
 </div>
 <?php
@@ -60,13 +59,27 @@ if ($result->num_rows > 0) {
     echo "<h3 class='text-center mt-5 fw-bold'>USER REQUEST APPROVAL</h3>";
     echo "<th>Id</th><th>Name</th><th>Email</th><th>Status</th>";
     while($row = $result->fetch_assoc()) {
-        echo "<tr><td>". $row["id"]. "  </td><td>". $row["name"].  "</td><td>" . $row["email"] . "</td><td><a href='update.php?id=".$row["id"]."''>" . $row["status"] . "</a></td></tr><br>";
+        echo "<tr><td>". $row["id"]. "  </td><td>". $row["name"].  "</td><td>" . $row["email"] . "</td>";
+        if($row["status"]=="approved")
+        {
+          ?>
+          <td><a href='update.php?id="<?php echo $row["id"] ?>"'> <?php echo  $row["status"] ?> </a></td></tr><br>
+          <?php
+           }
+           else
+           {
+            ?>
+            <td><a href='updateone.php?id="<?php echo $row["id"]?>"'><?php echo  $row["status"] ?> </a></td></tr><br>
+            <?php  }
     }
-  
-} else {
-    echo "0 results";
-}
-?>
+  }
+        
+          ?>
+       
+      
+        
+
+
 <!-- editing data -->
 <?php
 if(isset($_GET["id"]))
