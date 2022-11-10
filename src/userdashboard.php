@@ -10,6 +10,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 ?>
+<!-- editing data -->
 <?php
 if(isset($_GET["id"]))
 {
@@ -25,6 +26,7 @@ if ($result->num_rows > 0) {
 }
 }
 ?>
+<!-- fetching data from register table -->
 <?php
 $email = $_POST["email"];
 $password =$_POST["password"];
@@ -33,9 +35,7 @@ $result = mysqli_query($conn, $sql);
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
       $_SESSION["id"]=$row["id"];
-     $_SESSION["name"]= $row["name"];
-    
-      
+     $_SESSION["name"]= $row["name"];   
      if($row["status"] == "requested")
      {
         echo "<script>
@@ -63,10 +63,10 @@ $namesession= $_SESSION["name"];
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-
+<!-- navbar start -->
 <nav class="navbar navbar-expand-lg navbar-light nav1">
 
-  <a class="navbar-brand" href="home.php">Home</a>
+  <a class="navbar-brand" href="home.php"  style="color:#fff;">Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -78,10 +78,15 @@ $namesession= $_SESSION["name"];
       <li class="nav-item">
         <a class="nav-link" href="userregister1.php"><span class="dash1">User Login Page</span></a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="index.php"><span class="dash1">User Registration Page</span></a>
+      </li>
     </ul>
   </div>
 </nav>
+<!-- navbar end -->
 <br>
+<!-- alert of blog added -->
     <div class="container">
 <?php if(isset($_POST["new_post"])){?>
     <div class="alert alert-primary" role="alert">
@@ -176,10 +181,10 @@ if ($result2->num_rows > 0) {
   </div>
    </div>
    </div>
-  
+   <?php echo "<br>"; ?>
   <?php  } ?>
   <?php } ?>
-    <!-- echo "<tr><td>" .$row["uname"]."</td><td>". $row["id"]. "  </td><td>". $row["title"].  "</td><td>" . $row["content"] . "</td><td><a class='btn btn-info' href='userdashboard.php?id=".$row["id"]."'>edit</a></td><td><a href='delete.php?id=".$row['id']."' >Delete</a></td>"; -->
+    
 
 
 

@@ -14,10 +14,9 @@ include 'connection.php';
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<!-- navbar start -->
 <nav class="navbar navbar-expand-lg navbar-light nav1">
-
-<a class="navbar-brand" href="#">Home</a>
+<a class="navbar-brand" href="#" style="color:#fff;">Home</a>
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -35,8 +34,11 @@ include 'connection.php';
   </ul>
 </div>
 </nav>
+<!-- navbar end -->
 <p>
     <h3 class="text-center" style="color:#17a2b8;">Blogs BY User or Admin</h3>
+
+    <!-- fetching data from blog table -->
 <?php 
 $sql2 = "SELECT id,title,content,userid,uname  FROM blogtable";
 $result2 = mysqli_query($conn, $sql2); ?>
@@ -57,6 +59,7 @@ if ($result2->num_rows > 0) {
 </div>
    </div>
    </div>
+   <?php echo "<br>"; ?>
    <?php  } ?>
 <?php } ?>
 

@@ -13,10 +13,10 @@
 </head>
 
 <body>
-
+<!-- navbar start -->
 <nav class="navbar navbar-expand-lg navbar-light nav1">
 
-  <a class="navbar-brand" href="home.php">Home</a>
+  <a class="navbar-brand" href="home.php" style="color:#fff;">Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -34,7 +34,7 @@
 </nav>
 
 
-
+<!-- Registration form start -->
     <div class="container">
         <section class="h-100 h-custom" style="background-color: #0dcaf0;">
             <div class="container py-5 h-100">
@@ -86,6 +86,7 @@
        
         </section>
     </div>
+    <!-- registration form end -->
 </body>
 
 </html>
