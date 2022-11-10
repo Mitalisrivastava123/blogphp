@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+if(isset($_POST["logout"]))
+{
+  session_unset();
+  session_destroy();
+  
+}
 $servername = "mysql-server";
 $username = "root";
 $password = "secret";
@@ -10,6 +16,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 ?>
+
+
 <!-- editing data -->
 <?php
 if(isset($_GET["id"]))
@@ -117,10 +125,8 @@ $namesession= $_SESSION["name"];
 <?php
 echo "<form action = '' method='post'>
 <button type='submit' name='logout' style='background-color:#17a2b8;padding:10px;color:#fff;margin-top:10px;margin:auto;'>logout User</button></form>";
-if(isset($_POST["logout"]))
-{
-  session_destroy();
-}
+
+
 ?>
  <br>
 <?php

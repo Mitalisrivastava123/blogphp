@@ -1,0 +1,45 @@
+.image1
+{
+    width:500px;
+    margin-top:50px;
+}
+.blog1
+{
+    padding:10px;
+    text-decoration:none;
+    color:#000;
+    background:#fff;
+    margin:auto;
+    display: block;
+    
+}
+.blog2
+{
+    padding:10px;
+    text-decoration:none;
+    color:#000;
+    background:#fff;
+   
+}
+.create
+{
+    text-align:center;
+    color:#fff;
+}
+.sign-in
+{
+    color:red;
+}
+.admin
+{
+    color:black;
+}
+.nav1
+{
+    background:#198754;
+}
+.dash1
+{
+    color:#fff;
+}
+/* action="update2.php?userid=<?php echo $idone ?> */

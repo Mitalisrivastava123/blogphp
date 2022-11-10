@@ -1,16 +1,16 @@
 <?php
 session_start();
+
 $servername = "mysql-server";
 $username = "root";
 $password = "secret";
 $dbname = "registeration";
 $conn = new mysqli($servername, $username, $password, $dbname);
-;
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 ?>
-<!-- to update data fetching id -->
+<!-- editing data -->
 <?php
 if(isset($_GET["id"]))
 {
@@ -26,16 +26,16 @@ if ($result->num_rows > 0) {
 }
 }
 ?>
-<!-- getting data from register table -->
+<!-- fetching data from register table -->
 <?php
 $email = $_POST["email"];
 $password =$_POST["password"];
-
 $sql = "SELECT id,name,email,status  FROM registertable WHERE email = '$email' and password='$password'";
 $result = mysqli_query($conn, $sql);
-
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
+      $_SESSION["id"]=$row["id"];
+     $_SESSION["name"]= $row["name"];   
      if($row["status"] == "requested")
      {
         echo "<script>
@@ -49,6 +49,8 @@ if ($result->num_rows > 0) {
      }
     }
 }
+$idsession= $_SESSION["id"];
+$namesession= $_SESSION["name"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,10 +63,10 @@ if ($result->num_rows > 0) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-
+<!-- navbar start -->
 <nav class="navbar navbar-expand-lg navbar-light nav1">
 
-  <a class="navbar-brand" href="#">Home</a>
+  <a class="navbar-brand" href="home.php"  style="color:#fff;">Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -76,10 +78,15 @@ if ($result->num_rows > 0) {
       <li class="nav-item">
         <a class="nav-link" href="userregister1.php"><span class="dash1">User Login Page</span></a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="index.php"><span class="dash1">User Registration Page</span></a>
+      </li>
     </ul>
   </div>
 </nav>
+<!-- navbar end -->
 <br>
+<!-- alert of blog added -->
     <div class="container">
 <?php if(isset($_POST["new_post"])){?>
     <div class="alert alert-primary" role="alert">
@@ -88,21 +95,12 @@ if ($result->num_rows > 0) {
 </div>
 </div>
 </div>
-<!-- getting data from register table -->
 <?php
-$sqlqu = "SELECT id,name  FROM registertable WHERE email = '$email' and password='$password'";
-$resultset = mysqli_query($conn, $sqlqu);
-if ($resultset->num_rows > 0) {
-  while($row = $resultset->fetch_assoc()) {
-  $idone= $row["id"];
-  // echo $idone;
-  $name=$row["name"];
-    }
-}
 ?> 
 <div class="container">
 <h4 class="text-center">Create Your Blog Here</h4>
-<form method="POST" action="update2.php?userid=<?php echo $idone ?>">
+<h3 class="text-center" style="color:#17a2b8">User Dashboard</h3>
+<form method="POST">
   <div class="form-group">
     <label for="exampleInputEmail1">Title</label>
     <input type="text" class="form-control" name="title" value="<?php echo $title1;?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter title">
@@ -116,8 +114,34 @@ if ($resultset->num_rows > 0) {
   <button type="submit" name="update" class="btn btn-info">update</button>
 </form>
 </div>
+<?php
+echo "<form action = '' method='post'>
+<button type='submit' name='logout' style='background-color:#17a2b8;padding:10px;color:#fff;margin-top:10px;margin:auto;'>logout User</button></form>";
+if(isset($_POST["logout"]))
+{
+  session_destroy();
+}
+?>
  <br>
 <?php
+$sqlqu = "SELECT id,name  FROM registertable WHERE email = '$email' and password='$password'";
+$resultset = mysqli_query($conn, $sqlqu);
+if ($resultset->num_rows > 0) {
+  while($row = $resultset->fetch_assoc()) {
+  $idone= $row["id"];
+  // echo $idone;
+  $name=$row["name"];
+    }
+}
+if(isset($_POST["new_post"]))
+{
+$title = $_POST["title"];
+$content=$_POST["content"];
+$sql1 = "INSERT INTO blogtable(title,content,userid,uname) values ('$title','$content','$idsession','$namesession')";
+$result1 = mysqli_query($conn, $sql1);
+if (mysqli_query($conn, $sql)) {  
+}
+}
 // update section
 if(isset($_POST["update"]))
 {
@@ -131,19 +155,43 @@ if (mysqli_query($conn, $sqltwo)) {
 }
 }
 ?>
-<!-- getting data from blogtable -->
 <?php 
-$sql2 = "SELECT id,title,content,userid  FROM blogtable";
+$sql2 = "SELECT id,title,content,userid,uname  FROM blogtable WHERE userid='$idsession'";
 $result2 = mysqli_query($conn, $sql2); ?>
 <?php 
 if ($result2->num_rows > 0) {
-    echo "<table border='1px'>";
-    echo "<th>Blogs Posted By UserId </th><th>Id</th><th>Title</th><th>Content</th>";
-   while($row = $result2->fetch_assoc()) {
-    echo "<tr><td>".$row["userid"]."</td><td>". $row["id"]. "  </td><td>". $row["title"].  "</td><td>" . $row["content"] . "</td><td><a class='btn btn-info' href='userdashboard.php?id=".$row["id"]."'>edit</a></td><td><a href='delete.php?id=".$row['id']."' >Delete</a></td>";
-    }
-}
-?>
+    $nameuser =$row["userid"];
+    echo $nameuser;
+    echo "<table border='1px' style='margin:auto;width:80%;background:#f3fdff;'>";
+   while($row = $result2->fetch_assoc()) {?>
+    <div class="row">
+    <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <div class="card-columns-fluid">
+  <div class="card" style="width: 30rem;background-color:#17a2b8;color:#fff;margin:auto;">
+  <div class="card-body">
+    <h4 class="card-text">Block Posted By-><?php echo $row["uname"];?></h4>
+    <h5 class="card-title"><?php echo $row["title"];?></h5>
+    <p class="card-text"><?php echo $row["content"];?></p>
+  <?php  echo "<a href='userdashboard.php?id=".$row["id"]."'><span style='background:#198754;text-decoration:none;color:#fff;padding:10px;'>Edit</span></a>" ?>
+  <?php  echo "<a href='delete.php?id=".$row['id']."' ><span style='background:#198754;text-decoration:none;color:#fff;padding:10px;'>delete</span></a>" ?>
+  
+  </div>
+  </div>
+  </div>
+   </div>
+   </div>
+   <?php echo "<br>"; ?>
+  <?php  } ?>
+  <?php } ?>
+    
+
+
+
+
+
+
+
 </body>
 </html>
 
